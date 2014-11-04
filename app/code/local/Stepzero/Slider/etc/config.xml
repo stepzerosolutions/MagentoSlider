@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BrandSpec
+ *
+ * NOTICE OF LICENSE
+ *
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Stepzero
+ * @package     Stepzero_Slider
+ * @copyright   Copyright (c) 2014 Stepzero. (http://www.stepzero.solutions)
+ * @license     http://www.stepzero.solutions/licenses/Stepzero_Slider
+ */
+-->
+<config>
+	
+    <modules>
+        <Stepzero_Slider>
+            <version>1.0.2.2</version>
+        </Stepzero_Slider>
+    </modules>
+
+
+	<!--- GLOBAL -->
+    <global>
+        <helpers>
+            <slider>
+                <class>Stepzero_Slider_Helper</class>
+            </slider>
+        </helpers>
+		
+		<models>
+			<slider>
+				<class>Stepzero_Slider_Model</class>
+				<resourceModel>slider_resource</resourceModel>
+			</slider>
+			
+			<slider_resource>
+				<class>Stepzero_Slider_Model_Resource</class>
+				<entities>
+					<slider>
+						<table>slider</table>
+					</slider>
+					<slider_items>
+						<table>slider_items</table>
+					</slider_items>
+					<slider_links>
+						<table>slider_links</table>
+					</slider_links>
+				</entities>
+			</slider_resource>
+		</models>
+		
+		<resources>
+			<slider_setup>
+				<setup>
+					<module>Stepzero_Slider</module>
+					<class>Stepzero_Slider_Model_Resource_Mysql4_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</slider_setup>
+			<slider_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</slider_write>
+			<slider_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</slider_read>      
+		</resources>
+	
+		<blocks>
+			<slider>
+				<class>Stepzero_Slider_Block</class>
+			</slider>
+		</blocks>
+		
+    </global>
+	<!--- FRONT END -->
+	<frontend>
+		<blocks>
+			<slider>
+				<class>Stepzero_Slider_Block_Slider</class>
+			</slider>
+		</blocks>
+		
+		
+		<layout>
+			<updates>
+				<slider>
+					<file>slider.xml</file>
+				</slider>
+			</updates>
+		</layout>
+	</frontend>
+	
+	
+	<!--- ADMINHTML -->
+	<adminhtml>
+
+		<blocks>
+			<slider>
+				<class>Stepzero_Slider_Block_Adminhtml_Slider_Grid</class>
+				<class>Stepzero_Slider_Block_Adminhtml_Slideritems_Grid</class>
+			</slider>
+		</blocks>
+		
+		
+		<layout>
+			<updates>
+				<slider>
+					<file>slider.xml</file>
+				</slider>
+			</updates>
+		</layout>
+	</adminhtml>
+
+
+	<!--- ADMIN -->
+    <admin>
+	
+        <routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<slider before="Mage_Adminhtml">Stepzero_Slider_Adminhtml</slider>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+		
+    </admin>
+</config>
