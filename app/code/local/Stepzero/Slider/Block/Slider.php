@@ -1,6 +1,6 @@
 <?php
 /**
- * BrandSpec
+ * Stepzero
  *
  * NOTICE OF LICENSE
  *
@@ -101,7 +101,7 @@ class Stepzero_Slider_Block_Slider extends Mage_Core_Block_Template
 				$output .= '<div class="item ';
 				if( $first ) { $output .= 'active'; $first=false; }
 				$output .= '">';
-				$output .= $url.'<img src="'.$slider['slider_image_path'].'" alt="'.$slider['slideritem_title'].'" />'.$urlend;
+				$output .= $url.'<img data-src="'.$slider['slider_image_path'].'" alt="'.$slider['slideritem_title'].'" />'.$urlend;
 				$output .= '<div class="carousel-caption">
 								';
 				//$output .= $slider['slideritem_description'];

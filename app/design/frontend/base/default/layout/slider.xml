@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Stepzero
+ *
+ * NOTICE OF LICENSE
+ *
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Stepzero
+ * @package     Stepzero_Slider
+ * @copyright   Copyright (c) 2014 Stepzero. (http://www.stepzero.solutions)
+ * @license     http://www.stepzero.solutions/magento/licenses/Stepzero_Slider
+ */
+-->
+<layout version="0.1.0">
+
+
+    <cms_index_index>
+		<reference name="slidercontent">
+			<block type="slider/slider" name="slider" template="stepzero/slider/slider.phtml" as="slider" />
+		</reference>
+		<reference name="footer_js">
+			<action method="addItem"><type>skin_js</type><name>js/szero-slider.js</name></action>	
+		</reference>
+    </cms_index_index>
+
+
+</layout>

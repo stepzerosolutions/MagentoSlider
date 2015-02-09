@@ -1,6 +1,6 @@
 <?php
 /**
- * BrandSpec
+ * Stepzero
  *
  * NOTICE OF LICENSE
  *

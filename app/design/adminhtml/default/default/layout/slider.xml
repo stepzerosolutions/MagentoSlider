@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_slider_index>
+        <reference name="content">
+			<block type="core/text" name="slider_configuration_details">
+				<action method="setText">
+					<arg>Each slider have it's own configuration tab.</arg>
+				</action>			
+			</block>
+            <block type="slider/adminhtml_slider" name="slider" />
+        </reference>
+	</adminhtml_slider_index>
+
+    <adminhtml_slider_grid>
+		<remove name="root" />
+        <block type="slider/adminhtml_slider_grid" name="slider_grid" output="toHtml" />
+    </adminhtml_slider_grid>
+	
+		
+    <adminhtml_slider_edit>
+        <reference name="content">
+            <block type="slider/adminhtml_slider_edit" name="slider_edit" />
+        </reference>
+        <reference name="left">
+            <block type="slider/adminhtml_slider_edit_tabs" name="slider_edit_tabs" />
+        </reference>
+    </adminhtml_slider_edit>
+	
+    <adminhtml_slideritems_index>
+        <reference name="content">
+            <block type="slider/adminhtml_slideritems" name="slideritems" />
+        </reference>
+    </adminhtml_slideritems_index>
+
+    <adminhtml_slideritems_grid>
+		<remove name="root" />
+        <block type="slider/adminhtml_slideritems_grid" name="slideritems_grid" output="toHtml" />
+    </adminhtml_slideritems_grid>
+	
+		
+    <adminhtml_slideritems_edit>
+        <reference name="content">
+            <block type="slider/adminhtml_slideritems_edit" name="slideritems_edit" />
+        </reference>
+        <reference name="left">
+            <block type="slider/adminhtml_slideritems_edit_tabs" name="slideritems_edit_tabs" />
+        </reference>
+    </adminhtml_slideritems_edit>
+	
+
+</layout>
