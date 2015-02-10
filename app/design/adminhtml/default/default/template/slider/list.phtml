@@ -1,0 +1,127 @@
+<?php
+/**
+ * Stepzero
+ *
+ * NOTICE OF LICENSE
+ *
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Stepzero
+ * @package     Stepzero_Slider
+ * @copyright   Copyright (c) 2014 Stepzero. (http://www.stepzero.solutions)
+ * @license     http://www.stepzero.solutions/magento/licenses/Stepzero_Slider
+ */
+?>
+<div id="newlink_container">
+<?php if( !$sliderlinks ): ?>
+<?php else: ?>
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('slider')->__('Assigned Links/Content') ?></h4>
+    </div>
+    <?php foreach($sliderlinks->getItems() as $_item):?>
+        <div class="fieldset fieldset-wide" id="poll_answer_fieldset_<?php echo $_item->getSliderlink_id() ?>">
+        <table cellspacing="0" class="form-list">
+            <tr>
+                <td class="label"><label for="newlink_<?php echo $_item->getSliderlink_id() ?>"><?php echo Mage::helper('slider')->__('Title') ?> </label></td>
+                <td class="value"><input name="sliderlinktitle_edit[<?php echo $_item->getSliderlink_id() ?>]" 
+				type="text" size="50" maxlength="150px" value="<?php echo $_item->getSliderlink_title()?>" /></td>
+            </tr>
+            <tr>
+                <td class="label"><label for="sort_<?php echo $_item->getSliderlink_id() ?>"><?php echo Mage::helper('slider')->__('Positions') ?></label></td>
+                <td class="value">
+				Top=<input type="text" name="positionx_edit[<?php echo $_item->getSliderlink_id() ?>]" maxlength="4" size="5" value="<?php echo $_item->getSliderlink_x()?>" /> 
+				Left=<input type="text" name="positiony_edit[<?php echo $_item->getSliderlink_id() ?>]" maxlength="4" size="5" value="<?php echo $_item->getSliderlink_y()?>" /> 
+                </td>
+             </tr>
+            <tr>
+                <td class="label"><label for="sort_<?php echo $_item->getSliderlink_id() ?>"><?php echo Mage::helper('slider')->__('Content') ?></label></td>
+                <td class="value"> <input type="text" name="linkcontent_edit[<?php echo htmlentities( $_item->getSliderlink_id() ) ?>]" 
+				size="150" id="edit_content_<?php echo htmlentities( $_item->getSliderlink_id() ) ?>" style="padding:5px;"  />
+                </td>
+             </tr>
+            <tr>
+                <td class="label"><label for="deletelink_<?php echo $_item->getSliderlink_id() ?>"><?php echo Mage::helper('slider')->__('Remove Link') ?></label></td>
+                <td class="value"><input type="checkbox" name="delete[]" value="<?php echo $_item->getSliderlink_id() ?>"  /> Delete Link</td>
+             </tr>
+        </table>
+        </div>
+		
+<script type="text/javascript">
+//<![CDATA[
+	document.getElementById("edit_content_<?php echo htmlentities( $_item->getSliderlink_id() ) ?>").value= '<?php echo $_item->getSliderlink_content()?>';
+//]]>
+</script>
+
+    <?php endforeach; ?>
+<?php endif; ?>
+</div>
+<p class="a-right" style="margin:7px 0 0;"><?php echo $this->getAddButtonHtml(); ?></p>
+
+<script type="text/javascript">
+//<![CDATA[
+    var lastId = 0;
+    var newlink = function() {
+        return {
+            del : function(obj) {
+                if( confirm('<?php echo Mage::helper('poll')->__('Are you sure you want to delete it?') ?>') ) {
+                    fieldSet = obj.up('div.fieldset');
+                    if( $('id_' + fieldSet.id) ) {
+                        var itemId = $('id_' + fieldSet.id).value;
+                        var newElement = document.createElement('input');
+                        newElement.type = 'hidden';
+                        newElement.value = itemId;
+                        newElement.name = 'deleteAnswer[]';
+                        $('answers_container').appendChild(newElement);
+                    }
+                    fieldSet.remove();
+                }
+            },
+
+            add : function(obj) {
+                var newElement = document.createElement('div');
+                newElement.innerHTML = this.getTemplate();
+                $('newlink_container').appendChild(newElement);
+            },
+
+            getTemplate : function() {
+                var id = this.createId();
+                return  '<div class="fieldset fieldset-wide" id="poll_answer_fieldset_' + id + '">'
+                       +'<table cellspacing="0" class="form-list">'
+                       +'<tr>'
+                       +    '<td class="label"><label for="newfile_' + id + '"><?php echo Mage::helper('slider')->__('Title:') ?> <span class="required">*</span></label><\/td>'
+                       +    '<td class="value"><input name="sliderlinktitle['+id+']" type="text" size="50" maxlength="150px" /><\/td>'
+                       +'<\/tr>'
+                       +'<tr>'
+                       +    '<td class="label">Position</label><\/td>'
+                       +    '<td class="value">'
+                       +        'Top=<input type="text" name="positionx['+id+']" value="0" maxlength="4" size="5" /> Left=<input type="text" name="positiony['+id+']" value="0" maxlength="4" size="5" /></p>'
+                       +'<\/td>'
+                       +'<\/tr>'
+                       +'<tr>'
+                       +    '<td class="label">Content</label><\/td>'
+                       +    '<td class="value">'
+                       +        '<input type="text" name="linkcontent['+id+']" size="150" style="padding:5px;" /></p>'
+                       +'<\/td>'
+                       +'<\/tr>'
+                       +'<tr>'
+                       +    '<td class="label"></label><\/td>'
+                       +    '<td class="value">'
+                       +        '<p class="a-left" style="margin:7px 0 0;"><?php echo $this->getDeleteButtonHtml() ?></p>'
+                       +'<\/td>'
+                       +'<\/tr>'
+                       +'<\/table>'
+                       +'<\/div>';
+            },
+
+            createId : function () {
+                return --lastId;
+            }
+        }
+    }();
+//]]>
+</script>
