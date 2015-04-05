@@ -105,7 +105,7 @@ class Stepzero_Slider_Adminhtml_SlideritemsController extends Mage_Adminhtml_Con
 		}
 
 
-		$imgpath = '';
+		$imgurl = '';
 		if ($data = $this->getRequest()->getPost()) {
 			
 			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
@@ -124,11 +124,10 @@ class Stepzero_Slider_Adminhtml_SlideritemsController extends Mage_Adminhtml_Con
 					$uploader->setFilesDispersion(false);
 
 					// We set media as the upload dir
-					$path = Mage::getBaseDir('media') . DS . 'slider' . DS;
+					$path = Mage::getBaseDir(Mage_Core_Model_Store::URL_TYPE_MEDIA) . DS . 'slider' . DS;
 					$result = $uploader->save($path , $_FILES['filename']['name'] );
-					$urlpath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'slider/'. $_FILES['filename']['name'];
-					$imgpath = $urlpath;
-					
+					//Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)
+					$imgurl  = '/slider/'. $_FILES['filename']['name'];
 					
 				} catch (Exception $e) {
 		      		Mage::getSingleton('adminhtml/session')->addError(Mage::helper('web')->__('Image file is not uploaded. '. $e));
@@ -145,8 +144,8 @@ class Stepzero_Slider_Adminhtml_SlideritemsController extends Mage_Adminhtml_Con
 					if( $id ){
 						$model->load( $id );
 					}
-					if( !empty($imgpath) ) { 
-						$data['slider_image_path']=$imgpath;
+					if( !empty($imgurl) ) { 
+						$data['slider_image_path']=$imgurl;
 					} else {
 						$data['slider_image_path']=$data['slideritem_image_manual'];
 					}
@@ -240,10 +239,8 @@ class Stepzero_Slider_Adminhtml_SlideritemsController extends Mage_Adminhtml_Con
 				$model->load( $id );
 				$image = $model->getData() ; 
 				if( !empty( $image['slider_image_path'] )){
-					$urlpath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'slider/'  ;
-					$filename = str_replace($urlpath, "" , $image['slider_image_path'] );
-					$path = Mage::getBaseDir('media') . DS . 'slider' . DS;
-				    if(file_exists($path."/".$filename)) unlink($path."/".$filename);
+					$path = Mage::getBaseDir(Mage_Core_Model_Store::URL_TYPE_MEDIA) ;
+				    if(file_exists($path . $image['slider_image_path'])) unlink( $path . $image['slider_image_path'] );
 				}
 				$model->setId( $id )
 					->delete();

@@ -64,22 +64,19 @@ class Stepzero_Slider_Block_Slider extends Mage_Core_Block_Template
 	
 	public function getLoadedSliderImages( $slideridentifier, $cid='generic_slider' ){
 		$storeid = Mage::app()->getStore()->getId();
-		
 		$collection = Mage::getModel('slider/slider')->getCollection()
 						->addFieldToSelect( array( 'slider_id', 'slider_width', 'slider_height', 'slider_duration' ) )
 						->join('slider/slider_items','`slider/slider_items`.slideritem_slider = main_table.slider_id')
 						->addFieldToFilter('slider_id',$slideridentifier )
 						->addFieldToFilter('main_table.status', array('eq'=>1) )
 						->addFieldToFilter('`slider/slider_items`.store_id', array(array('like'=>'%' . $storeid . '%')) );
-						
-						
 		$collection->getSelect()->order('slider_sort ASC');
-
 		$sliders = $collection->getData();
 		$output = '';
 		$first=true;
 		$ol = '<ol class="carousel-indicators">';
 		$slidto = 0;
+
 		foreach( $sliders as $slider ){
 			if($slider['status']){
 				$slideritem_links = Mage::getModel('slider/slider_links')
@@ -91,22 +88,23 @@ class Stepzero_Slider_Block_Slider extends Mage_Core_Block_Template
 				$slidto++;
 				if( $first ) $ol .= ' class="active"';
 				$ol .= ' ></li>
-				
+
 				';
-				
-				
 				$url = !empty($slider['slider_url'])?'<a href="'.$slider['slider_url'].'" title="'.$slider['slideritem_title'].'">':'';
 				$urlend = !empty($slider['slider_url'])?'</a>':'';
 				
 				$output .= '<div class="item ';
 				if( $first ) { $output .= 'active'; $first=false; }
 				$output .= '">';
-				$output .= $url.'<img data-src="'.$slider['slider_image_path'].'" alt="'.$slider['slideritem_title'].'" />'.$urlend;
-				$output .= '<div class="carousel-caption">
-								';
-				//$output .= $slider['slideritem_description'];
-                $output .= '	';
-                $output .= '   </div>';
+				$output .= $url.'<img data-src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $slider['slider_image_path'].'" 
+									alt="'.$slider['slideritem_title'].'" />'.$urlend;
+				if( ! empty( $slider['slideritem_description'] ) ){
+					$output .= '<div class="carousel-caption">
+									';
+					$output .= $slider['slideritem_description'];
+    	            $output .= '	';
+	                $output .= '   </div>';
+				}
                 $output .= '</div>';
 
 			}
@@ -114,14 +112,23 @@ class Stepzero_Slider_Block_Slider extends Mage_Core_Block_Template
 		$ol .= '</ol>
 		
 		';
-		
-		
-		
 		if( empty( $output ) ) return false;
-		
-		
-		return  '<div class="carousel-inner">
-					' . $output . 
-					'</div>';
+		$outputRender = '<div class="carousel-inner">
+					' . $output . '
+					</div>';
+		if( count($sliders)>1 ) {
+					$outputRender .= '
+								 <!-- Controls -->
+								  <a class="left carousel-control" href="#'.$cid.'" role="button" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								  </a>
+								  <a class="right carousel-control" href="#'.$cid.'" role="button" data-slide="next">
+									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								  </a>
+					';
+		}
+		return $outputRender;
 	}
 }

@@ -26,9 +26,9 @@
     </div>
 	
     <div class="fieldset fieldset-wide" id="slidermage">
-    	<img src="<?php echo $sliderimage["slider_image_path"]?>" width="100%" style="margin:0 auto;">
+    	<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)?><?php echo $sliderimage["slider_image_path"]?>" width="100%" style="margin:0 auto;">
         
-        <p><strong><?php echo $sliderimage["slider_image_path"]?></strong></p>
+        <p><strong><?php echo Mage_Core_Model_Store::URL_TYPE_MEDIA?><?php echo $sliderimage["slider_image_path"]?></strong></p>
     </div>
 <?php endif;?>
 </div>

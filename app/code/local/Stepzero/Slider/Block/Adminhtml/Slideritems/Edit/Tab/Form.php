@@ -35,8 +35,6 @@ class Stepzero_Slider_Block_Adminhtml_Slideritems_Edit_Tab_Form extends Mage_Adm
 	  
       $fieldset->addField('slideritem_description', 'editor', array(
           'label'     => Mage::helper('slider')->__('Description'),
-          'class'     => 'required-entry',
-          'required'  => true,
           'name'      => 'slideritem_description',
 		  'wysiwyg'   => true,
       ));
@@ -59,7 +57,7 @@ class Stepzero_Slider_Block_Adminhtml_Slideritems_Edit_Tab_Form extends Mage_Adm
           'name'      => 'filename',
 	  ));
 	  
-	if (!Mage::app()->isSingleStoreMode()) {
+	//if (!Mage::app()->isSingleStoreMode()) {
 		$fieldset->addField('store_id', 'multiselect', array(
 			'name' => 'stores[]',
 			'label' => Mage::helper('slider')->__('Store View'),
@@ -68,12 +66,12 @@ class Stepzero_Slider_Block_Adminhtml_Slideritems_Edit_Tab_Form extends Mage_Adm
 			'values' => Mage::getSingleton('adminhtml/system_store')
 						 ->getStoreValuesForForm(false, true),
 		));
-	}else {
-		$fieldset->addField('store_id', 'hidden', array(
-			'name' => 'stores[]',
-			'value' => Mage::app()->getStore(true)->getId()
-		));
-	}
+	//}else {
+		//$fieldset->addField('store_id', 'hidden', array(
+		//	'name' => 'stores[]',
+		//	'value' => Mage::app()->getStore(true)->getId()
+		//));
+	//}
 
 		
       $fieldset->addField('status', 'select', array(
